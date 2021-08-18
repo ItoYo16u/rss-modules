@@ -1,7 +1,7 @@
 name: rss_core
 description: RSS core module.
 version: 0.0.1
-homepage: https://github.com
+homepage: https://github.com/rss-modules/core
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
       url: git@github.com:ItoYo16u/dart-modules.git
       path: flechette
   http: ^0.13.3
+  meta: ^1.7.0
   metadata_fetch: ^0.4.1
   xml: ^5.2.0
 

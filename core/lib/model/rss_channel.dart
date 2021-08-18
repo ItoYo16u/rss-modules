@@ -14,6 +14,13 @@ class RSSChannel {
   final String link;
   final String description;
   final Thumbnail? thumbnail;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'url': url,
+        'title': title,
+        'link': link,
+        'description': description,
+      };
 }
 
 class Thumbnail {
@@ -30,4 +37,12 @@ class Thumbnail {
   final String? alink;
   final double? width;
   final double? height;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'url': src,
+        if (title != null) ...<String, dynamic>{'title': title},
+        if (alink != null) ...<String, dynamic>{'link': alink},
+        if (width != null) ...<String, dynamic>{'width': width},
+        if (height != null) ...<String, dynamic>{'height': height},
+      };
 }
