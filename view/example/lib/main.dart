@@ -1,10 +1,26 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:rss_core/adaptor/query/rss_query_on_http.dart';
+import 'package:rss_view/rss_view.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+class MockQuery extends RSSQueryOnHttp {
+  MockQuery(http.Client client) : super(client);
+
+  @override
+  Future<Iterable<String>> getSavedRSSUrls() async {
+    return [
+      'http://jp.techcrunch.com/feed',
+      'https://www.vox.com/rss/index.xml',
+      'https://www.theguardian.com/world/zimbabwe/rss'
+    ];
+  }
+}
+
+final mockQuery = MockQuery(http.Client());
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,20 +33,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {});
   }
 
   @override
@@ -40,8 +42,25 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: const Center(
-          child: Text('Hello Flutter'),
+        body: RSSListPresenter(
+          wantKeepAlive: false,
+          rssQuery: mockQuery,
+          onError: (_, __) => const SizedBox.shrink(),
+          builder: (ctx, channels, _) => ListView.builder(
+            itemBuilder: (ctx, idx) {
+              final channel = channels.toList()[idx];
+              return ListTile(
+                title: Text(channel.title),
+                subtitle: Text(channel.description),
+                leading: FeedThumbnail(
+                    rssQuery: mockQuery,
+                    width: 42,
+                    height: 42,
+                    url: channel.url),
+              );
+            },
+            itemCount: channels.length,
+          ),
         ),
       ),
     );
