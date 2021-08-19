@@ -73,13 +73,38 @@ extension ThumbnailExtractor on XmlElement {
   }
 }
 
+extension Optional<T> on T? {
+  R? map<R>(R Function(T) f) {
+    if (this == null) {
+      return null;
+    } else {
+      return f(this!);
+    }
+  }
+
+  R mapOr<R>(R Function(T) f, {required R or}) {
+    if (this == null) {
+      return or;
+    } else {
+      return f(this!);
+    }
+  }
+}
+
 extension ChannelExtractor on XmlElement {
   Result<RSSChannel> extractChannel(RSSType rssType, String rssUrl) {
     final title = extractStringBy('title');
     final description = extractStringBy(descriptionMapping[rssType]!);
     final link = extractStringBy('link');
+    // fixme: better handling
+    // only work for rss 1.0, 2.0;
     final imgElm = getElement('image');
-    final img = imgElm?.extractThumbnail(rssType);
+    final atomIcon = getElement('icon');
+    final img = imgElm?.extractThumbnail(rssType) ??
+        atomIcon.mapOr(
+          (icon) => Result.success(Thumbnail(src: icon.text)),
+          or: Result.failure('NEITHER_IMAGE_NOR_ICON_FOUND', ''),
+        );
     final isValid = rssType == RSSType.atom
         ? title.isSuccess && link.isSuccess
         : title.isSuccess && description.isSuccess && link.isSuccess;

@@ -49,7 +49,8 @@ void main() {
       final res = p.extractChannel(d, 'http://example.com');
       final channel = res.value;
       expect(channel is RSSChannel, true);
-      expect(channel!.thumbnail == null, true);
+      expect(channel!.thumbnail != null,true);
+      expect(channel.thumbnail?.src != null,true);
       final items = p.extractItems(d, channel);
       expect(items.length, 3);
       expect(items.first.title, 'article0');

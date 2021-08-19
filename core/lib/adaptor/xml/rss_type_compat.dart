@@ -22,5 +22,5 @@ const descriptionMapping = <RSSType, String>{
 const imageMapping = <RSSType, String?>{
   RSSType.v1_0: null,
   RSSType.v2_0: 'image',
-  RSSType.atom: null
+  RSSType.atom: 'icon'
 };
