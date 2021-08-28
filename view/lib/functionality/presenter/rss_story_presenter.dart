@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class RSSStoryPresenter extends StatefulWidget {
-  const RSSStoryPresenter({required this.articleUrl, required this.onLoading});
+  const RSSStoryPresenter(
+      {required this.url, required this.onLoading, Key? key})
+      : super(key: key);
 
-  final String articleUrl;
+  final String url;
   final Widget onLoading;
 
   @override
@@ -24,13 +26,13 @@ class _RSSStoryPresenterState extends State<RSSStoryPresenter> {
       builder: (ctx, child, animationController) => Opacity(
           child: child,
           opacity:
-          animationController.drive(Tween<double>(begin: 1, end: 0)).value),
+              animationController.drive(Tween<double>(begin: 1, end: 0)).value),
       disappearingAnimationDuration: const Duration(milliseconds: 700),
-      onAnimationFinished: (_) => hideCurtain(),
+      onAnimationFinished: (_) => removeCurtain(),
     );
   }
 
-  void hideCurtain() {
+  void removeCurtain() {
     setState(() {
       _showCurtain = false;
     });
@@ -43,26 +45,26 @@ class _RSSStoryPresenterState extends State<RSSStoryPresenter> {
 
   @override
   Widget build(BuildContext context) => Stack(
-    fit: StackFit.expand,
-    children: [
-      WebView(
-        initialUrl: widget.articleUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        onPageFinished: (_) {
-          _curtain.state?.fireAnimation();
-        },
-      ),
-      if (_showCurtain) _curtain
-    ],
-  );
+        fit: StackFit.expand,
+        children: [
+          WebView(
+            initialUrl: widget.url,
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageFinished: (_) {
+              _curtain.state?.fireAnimation();
+            },
+          ),
+          if (_showCurtain) _curtain
+        ],
+      );
 }
 
 class Curtain extends StatefulWidget {
   Curtain(
       {required this.disappearingAnimationDuration,
-        required this.onAnimationFinished,
-        required this.builder,
-        required this.child});
+      required this.onAnimationFinished,
+      required this.builder,
+      required this.child});
 
   final Duration disappearingAnimationDuration;
   final void Function(AnimationController) onAnimationFinished;
@@ -103,8 +105,8 @@ class _CurtainState extends State<Curtain> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-    animation: controller,
-    builder: (ctx, child) => widget.builder(ctx, child, controller),
-    child: widget.child,
-  );
+        animation: controller,
+        builder: (ctx, child) => widget.builder(ctx, child, controller),
+        child: widget.child,
+      );
 }
