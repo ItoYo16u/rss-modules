@@ -9,7 +9,9 @@ class RSSListPresenter extends StatefulWidget {
       required this.wantKeepAlive,
       required this.onError,
       this.onLoading,
-      this.doOnData});
+      this.doOnData,
+      Key? key})
+      : super(key: key);
 
   final RSSQuery rssQuery;
   final bool wantKeepAlive;
