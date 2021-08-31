@@ -277,7 +277,7 @@ packages:
     description:
       path: core
       ref: HEAD
-      resolved-ref: fc8a00bb45415bbeca5d22d4162536718afbd443
+      resolved-ref: "9a1d7e0a69cf20c6a5c96402cfd2c4f968874399"
       url: "git@github.com:ItoYo16u/rss-modules.git"
     source: git
     version: "0.0.1"
@@ -306,14 +306,14 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0+3"
+    version: "2.0.0+4"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0+2"
+    version: "2.0.1"
   stack_trace:
     dependency: transitive
     description:
@@ -397,7 +397,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.5"
+    version: "2.2.8"
   xdg_directories:
     dependency: transitive
     description:
