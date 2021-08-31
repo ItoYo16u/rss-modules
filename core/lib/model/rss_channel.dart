@@ -8,11 +8,15 @@ class RSSChannel {
     required this.description,
     this.thumbnail,
   });
-
+  /// unique url to identify rss channel
   final String url;
+  /// rss title
   final String title;
+  /// link to website
   final String link;
+  /// rss description
   final String description;
+  /// rss channel thumbnail.
   final Thumbnail? thumbnail;
 
   Map<String, dynamic> toJson() => <String, dynamic>{

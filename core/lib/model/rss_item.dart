@@ -1,3 +1,4 @@
+/// article summary belonging to rss channel
 class RSSItem {
   RSSItem({
     required this.id,
@@ -6,6 +7,7 @@ class RSSItem {
     required this.title,
     required this.description,
     required this.url,
+    required this.rssUrl,
     required this.displayTime,
     this.categories = const [],
     this.author,
@@ -17,6 +19,7 @@ class RSSItem {
   final String title;
   final String feedTitle;
   final String? feedThumbnail;
+  final String rssUrl;
   final String? author;
   final List<String> categories;
   final DateTime displayTime;

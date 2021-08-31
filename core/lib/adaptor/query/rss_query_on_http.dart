@@ -6,7 +6,7 @@ import 'package:rss_core/model/rss_channel.dart';
 import 'package:rss_core/model/rss_item.dart';
 import 'package:rss_core/query/rss_query.dart';
 import 'package:xml/xml.dart';
-
+/// partial implementation that depends on http
 abstract class RSSQueryOnHttp extends RSSQuery {
   RSSQueryOnHttp(this.client);
 

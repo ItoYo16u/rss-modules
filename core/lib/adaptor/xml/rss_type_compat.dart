@@ -1,7 +1,5 @@
 import 'package:rss_core/model/rss_channel.dart';
 
-abstract class ParsableFromXML {}
-
 const pubDateMapping = <RSSType, String>{
   RSSType.atom: 'updated',
   RSSType.v1_0: 'dc:date',

@@ -148,6 +148,7 @@ extension ItemExtractor on XmlElement {
           id: url.value!,
           feedTitle: channel.title,
           feedUrl: channel.link,
+          rssUrl:channel.url,
           feedThumbnail: channel.thumbnail?.src,
           title: title.value!,
           description: description.value!,
