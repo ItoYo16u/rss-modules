@@ -24,7 +24,7 @@ class FeedThumbnail extends StatelessWidget {
         builder: (ctx, channel) => CachedNetworkImage(
           width: width,
           height: height,
-          imageUrl: channel.thumbnail?.src ?? '',
+          imageUrl: channel.thumbnail?.src ?? 'https://via.placeholder.com/96',
           placeholder: (context, url) => ColoredBox(
             color: Theme.of(context).canvasColor,
           ),
@@ -40,8 +40,13 @@ class FeedThumbnail extends StatelessWidget {
             color: Theme.of(context).canvasColor,
           ),
         ),
-        onError: (_, __) => ColoredBox(
-          color: Theme.of(context).canvasColor,
+        onError: (_, __) => Container(
+          width: width,
+          height: height,
+          padding: const EdgeInsets.fromLTRB(0, 4, 4, 4),
+          child: ColoredBox(
+            color: Theme.of(context).canvasColor,
+          ),
         ),
       );
 }

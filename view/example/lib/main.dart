@@ -15,7 +15,8 @@ class MockQuery extends RSSQueryOnHttp {
     return [
       'http://jp.techcrunch.com/feed',
       'https://www.vox.com/rss/index.xml',
-      'https://www.theguardian.com/world/zimbabwe/rss'
+      'https://www.theguardian.com/world/zimbabwe/rss',
+      'http://feeds.feedburner.com/TechCrunch'
     ];
   }
 }
