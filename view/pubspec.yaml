@@ -1,7 +1,7 @@
 name: rss_view
 description: rss view module.
-version: 0.0.1
-homepage: https://github.com/ItoYo16u/rss-modules/view
+version: 0.0.1+20210913
+homepage: https://github.com/i10416/rss-modules/view
 publish_to: none
 
 environment:
@@ -13,11 +13,11 @@ dependencies:
     sdk: flutter
   rss_core:
     git:
-      url: git@github.com:ItoYo16u/rss-modules.git
+      url: git@github.com:i10416/rss-modules.git
       path: core
   flechette:
     git:
-      url: git@github.com:ItoYo16u/dart-modules.git
+      url: git@github.com:i10416/dart-modules.git
       path: flechette
   cached_network_image: ^3.0.0
   webview_flutter: ^2.0.10
