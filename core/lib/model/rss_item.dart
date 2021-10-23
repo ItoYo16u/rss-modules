@@ -16,18 +16,30 @@ class RSSItem {
   });
 
   final String id;
+
+  /// title of article or rss content
   final String title;
+
+  /// title of feed this item belongs to
   final String feedTitle;
+
+  /// thumbnail url of feed this item belongs to
   final String? feedThumbnail;
+
+  /// rss xml url this item belongs to
   final String rssUrl;
+
+  /// author of this article or rss content
   final String? author;
+
+  /// categories of this item
   final List<String> categories;
   final DateTime displayTime;
   final String description;
 
-  // uid;
   final String feedUrl;
 
+  /// uid
   final String url;
   final List<String> keywords;
 

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flechette/flechette.dart';
 import 'package:rss_core/adaptor/xml/rss_type_compat.dart';
+import 'package:rss_core/model/exceptions.dart';
 import 'package:rss_core/model/rss_channel.dart';
 import 'package:rss_core/model/rss_item.dart';
 import 'package:xml/xml.dart';
@@ -13,7 +14,8 @@ extension Extractor on XmlElement {
         findElements(name).first.text,
       );
     } on StateError {
-      return Result.failure('XML_PARSE_ERR', '$name not found');
+      return Result.failure(
+          RSSParseFailures.elementNotFound, '$name not found');
     }
   }
 
@@ -21,7 +23,7 @@ extension Extractor on XmlElement {
     late String pubDate;
     final elements = findElements(name);
     if (elements.isEmpty) {
-      return Result.failure('NOT_FOUND', name);
+      return Result.failure(RSSParseFailures.elementNotFound, name);
     } else {
       pubDate = elements.first.text.replaceAll('+0000', 'GMT');
     }
@@ -35,7 +37,7 @@ extension Extractor on XmlElement {
         return Result.success(retryWithHTTPFormat);
       } on HttpException catch (_) {
         return Result.failure(
-          'INVALID_DATETIME_FORMAT',
+          RSSParseFailures.invalidFormat,
           'pubDate is neither ISO format nor Standard HTTP Date format.',
         );
       }
@@ -48,7 +50,8 @@ extension Extractor on XmlElement {
         findElements(name).map((e) => e.text).toList(),
       );
     } on StateError {
-      return Result.failure('XML_PARSE_ERR', '$name not found');
+      return Result.failure(
+          RSSParseFailures.elementNotFound, '$name not found');
     }
   }
 }
@@ -64,7 +67,7 @@ extension ThumbnailExtractor on XmlElement {
       );
     }
     return Result.failure(
-      'XML_PARSE_ERR',
+      RSSParseFailures.missingProperty,
       'Invalid Property: ${[
         if (!title.isSuccess) ...['title is missing or invalid'],
         if (!src.isSuccess) ...['src is missing or invalid']
@@ -122,7 +125,7 @@ extension ChannelExtractor on XmlElement {
       );
     }
     return Result.failure(
-      'XML_PARSE_ERR',
+      RSSParseFailures.missingProperty,
       'Invalid Property: ${[
         if (!title.isSuccess) ...['title is missing or invalid'],
         if (!description.isSuccess) ...['description is missing or invalid'],
@@ -148,7 +151,7 @@ extension ItemExtractor on XmlElement {
           id: url.value!,
           feedTitle: channel.title,
           feedUrl: channel.link,
-          rssUrl:channel.url,
+          rssUrl: channel.url,
           feedThumbnail: channel.thumbnail?.src,
           title: title.value!,
           description: description.value!,
@@ -159,7 +162,7 @@ extension ItemExtractor on XmlElement {
       );
     }
     return Result.failure(
-      'XML_PARSE_ERR',
+      RSSParseFailures.missingProperty,
       'Invalid Property: ${[
         if (!title.isSuccess) ...['title is missing or invalid'],
         if (!description.isSuccess) ...['src is missing or invalid'],

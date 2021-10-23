@@ -1,11 +1,13 @@
 import 'package:flechette/flechette.dart';
 import 'package:rss_core/adaptor/xml/model_ops.dart';
 import 'package:rss_core/adaptor/xml/rss_type_compat.dart';
+import 'package:rss_core/model/exceptions.dart';
 import 'package:rss_core/model/rss_channel.dart';
 import 'package:rss_core/model/rss_item.dart';
 import 'package:xml/xml.dart';
 
 class RSSParser {
+  /// check rss type. returns one of (RSSType.v1.0,RSSType.v2.0,RSSType.atom) or null.
   RSSType? checkRSSType(XmlDocument document) {
     final docName = document.rootElement.name;
     if (docName == XmlName.fromString('rdf:RDF')) {
@@ -19,18 +21,20 @@ class RSSParser {
     }
   }
 
+  /// extract channel from xml tree according to rss type.
   Result<RSSChannel> extractChannel(XmlDocument doc, String rssUrl) {
     final rssType = checkRSSType(doc);
     if (rssType == null) {
-      return Result.failure('', '');
+      return Result.failure(RSSParseFailures.invalidRSSType, '');
     }
     final props = _extractChannelXML(rssType, doc);
     if (props == null) {
-      return Result.failure('CHANNEL_NOT_FOUND', '');
+      return Result.failure(RSSParseFailures.channelNotFound, '');
     }
     return props.extractChannel(rssType, rssUrl);
   }
 
+  /// extract items in rss channel.
   Iterable<RSSItem> extractItems(XmlDocument doc, RSSChannel channel) {
     final rssType = checkRSSType(doc);
     if (rssType == null) {

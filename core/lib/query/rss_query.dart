@@ -12,7 +12,9 @@ abstract class RSSQuery {
   @protected
   Future<Iterable<String>> getSavedRSSUrls();
 
-  // fetch channel from cache or storage.
+  /// fetch channel from cache or storage.
+  ///
+  /// If cache is missing, this fetches channel delegating onCacheMissing function.
   @nonVirtual
   Future<Result<RSSChannel>> getChannelByUrl(String url) async {
     final maybeChannel = _cache[url];
