@@ -8,14 +8,19 @@ class RSSChannel {
     required this.description,
     this.thumbnail,
   });
+
   /// unique url to identify rss channel
   final String url;
+
   /// rss title
   final String title;
+
   /// link to website
   final String link;
+
   /// rss description
   final String description;
+
   /// rss channel thumbnail.
   final Thumbnail? thumbnail;
 
@@ -35,9 +40,10 @@ class Thumbnail {
     this.width,
     this.height,
   });
-
   final String? title;
-  final String src;
+
+  /// this src url must be valid url with image prefix
+  final Uri src;
   final String? alink;
   final double? width;
   final double? height;

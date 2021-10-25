@@ -1,3 +1,5 @@
+import 'package:rss_core/model/rss_channel.dart';
+
 /// article summary belonging to rss channel
 class RSSItem {
   RSSItem({
@@ -24,7 +26,7 @@ class RSSItem {
   final String feedTitle;
 
   /// thumbnail url of feed this item belongs to
-  final String? feedThumbnail;
+  final Thumbnail? feedThumbnail;
 
   /// rss xml url this item belongs to
   final String rssUrl;

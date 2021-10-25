@@ -32,7 +32,9 @@ void main() {
         expect(res.value!.thumbnail is Thumbnail, true);
         expect(
           res.value!.thumbnail!.src,
-          'https://jp.techcrunch.com/wp-content/uploads/2021/05/cropped-logo_tc-1.png?w=32',
+          Uri.parse(
+            'https://jp.techcrunch.com/wp-content/uploads/2021/05/cropped-logo_tc-1.png?w=32',
+          ),
         );
       });
     });

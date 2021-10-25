@@ -9,14 +9,46 @@ import 'package:xml/xml.dart';
 
 extension Extractor on XmlElement {
   Result<String> extractStringBy(String name) {
-    try {
-      return Result.success(
-        findElements(name).first.text,
-      );
-    } on StateError {
+    final elms = findElements(name);
+    if (elms.isEmpty) {
       return Result.failure(
           RSSParseFailures.elementNotFound, '$name not found');
     }
+    final elm = elms.first.text;
+    return Result.success(elm);
+  }
+
+  Result<String> extractNonEmptyStringBy(String name) {
+    final elms = findElements(name);
+    if (elms.isEmpty) {
+      return Result.failure(
+          RSSParseFailures.elementNotFound, '$name not found');
+    }
+    final elm = elms.first.text;
+    if (elm.isEmpty) {
+      return Result.failure(RSSParseFailures.invalidFormat,
+          '$name must not be empty string, but empty string element found.');
+    }
+    return Result.success(
+      findElements(name).first.text,
+    );
+  }
+
+  Result<Uri> extractUrlBy(String name) {
+    final elms = findElements(name);
+    if (elms.isEmpty) {
+      return Result.failure(
+        RSSParseFailures.elementNotFound,
+        '$name not found',
+      );
+    }
+    final elm = elms.first.text;
+    final uri = Uri.tryParse(elm);
+    if (uri == null) {
+      return Result.failure(RSSParseFailures.invalidFormat,
+          'invalid format: $uri can not be parsed as Uri');
+    }
+    return Result.success(uri);
   }
 
   Result<DateTime> extractDatetimeBy(String name) {
@@ -44,26 +76,20 @@ extension Extractor on XmlElement {
     }
   }
 
-  Result<List<String>> extractListBy(String name) {
-    try {
-      return Result.success(
+  Result<List<String>> extractListBy(String name) => Result.success(
         findElements(name).map((e) => e.text).toList(),
       );
-    } on StateError {
-      return Result.failure(
-          RSSParseFailures.elementNotFound, '$name not found');
-    }
-  }
 }
 
 extension ThumbnailExtractor on XmlElement {
   Result<Thumbnail> extractThumbnail(RSSType rssType) {
     final title = extractStringBy('title');
-    final src = extractStringBy('url');
+    final src = extractUrlBy('url');
+
     final alink = extractStringBy('link');
     if (title.isSuccess && src.isSuccess) {
       return Result.success(
-        Thumbnail(title: title.value!, src: src.value!, alink: alink.value),
+        Thumbnail(title: title.value, src: src.value!, alink: alink.value),
       );
     }
     return Result.failure(
@@ -103,11 +129,21 @@ extension ChannelExtractor on XmlElement {
     // only work for rss 1.0, 2.0;
     final imgElm = getElement('image');
     final atomIcon = getElement('icon');
-    final img = imgElm?.extractThumbnail(rssType) ??
-        atomIcon.mapOr(
-          (icon) => Result.success(Thumbnail(src: icon.text)),
-          or: Result.failure('NEITHER_IMAGE_NOR_ICON_FOUND', ''),
-        );
+    late final Thumbnail? thumbnail;
+
+    if (imgElm == null) {
+      // possibly atom rss.
+      final maybeUri = atomIcon.map((elm) => Uri.tryParse(elm.text));
+      if (maybeUri == null) {
+        thumbnail = null;
+      } else {
+        thumbnail = Thumbnail(src: maybeUri);
+      }
+    } else {
+      // rss 1.0 / 2.0
+      thumbnail = imgElm.extractThumbnail(rssType).value;
+    }
+
     final isValid = rssType == RSSType.atom
         ? title.isSuccess && link.isSuccess
         : title.isSuccess && description.isSuccess && link.isSuccess;
@@ -120,7 +156,7 @@ extension ChannelExtractor on XmlElement {
               ? description.value ?? ''
               : description.value!,
           link: link.value!,
-          thumbnail: img?.value,
+          thumbnail: thumbnail,
         ),
       );
     }
@@ -152,7 +188,7 @@ extension ItemExtractor on XmlElement {
           feedTitle: channel.title,
           feedUrl: channel.link,
           rssUrl: channel.url,
-          feedThumbnail: channel.thumbnail?.src,
+          feedThumbnail: channel.thumbnail,
           title: title.value!,
           description: description.value!,
           url: url.value!,

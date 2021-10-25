@@ -9,6 +9,7 @@ class FeedThumbnail extends StatelessWidget {
       required this.rssQuery,
       required this.width,
       required this.height,
+      required this.onThumbnailMissing,
       Key? key})
       : super(key: key);
 
@@ -17,21 +18,26 @@ class FeedThumbnail extends StatelessWidget {
   final double height;
   final RSSQuery rssQuery;
 
+  /// displayed when the channel found by the given url does not have thumbnail.
+  final Widget onThumbnailMissing;
+
   @override
   Widget build(BuildContext context) => RSSChannelPresenter(
         rssQuery: rssQuery,
         url: url,
-        builder: (ctx, channel) => CachedNetworkImage(
-          width: width,
-          height: height,
-          imageUrl: channel.thumbnail?.src ?? 'https://via.placeholder.com/96',
-          placeholder: (context, url) => ColoredBox(
-            color: Theme.of(context).canvasColor,
-          ),
-          errorWidget: (context, url, dynamic err) => ColoredBox(
-            color: Theme.of(context).canvasColor,
-          ),
-        ),
+        builder: (ctx, channel) => channel.thumbnail == null
+            ? onThumbnailMissing
+            : CachedNetworkImage(
+                width: width,
+                height: height,
+                imageUrl: channel.thumbnail!.src,
+                placeholder: (context, url) => ColoredBox(
+                  color: Theme.of(context).canvasColor,
+                ),
+                errorWidget: (context, url, dynamic err) => ColoredBox(
+                  color: Theme.of(context).canvasColor,
+                ),
+              ),
         onLoading: Container(
           width: width,
           height: height,

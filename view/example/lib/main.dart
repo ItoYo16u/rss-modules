@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
                     rssQuery: mockQuery,
                     width: 42,
                     height: 42,
+                    onThumbnailMissing: const SizedBox.shrink(),
                     url: channel.url),
               );
             },

@@ -97,10 +97,10 @@ packages:
     description:
       path: flechette
       ref: HEAD
-      resolved-ref: "8c98be5c76dae6fa49663549889f7333c835915c"
-      url: "git@github.com:ItoYo16u/dart-modules.git"
+      resolved-ref: ef58535cae04274fe1e3d97e70d77b2e2d47278d
+      url: "https://github.com/i10416/dart-modules.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.1+20210913"
   frontend_server_client:
     dependency: transitive
     description:
