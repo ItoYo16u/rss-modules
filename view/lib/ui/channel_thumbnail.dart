@@ -30,7 +30,7 @@ class FeedThumbnail extends StatelessWidget {
             : CachedNetworkImage(
                 width: width,
                 height: height,
-                imageUrl: channel.thumbnail!.src,
+                imageUrl: channel.thumbnail!.src.toString(),
                 placeholder: (context, url) => ColoredBox(
                   color: Theme.of(context).canvasColor,
                 ),
