@@ -3,11 +3,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class RSSStoryPresenter extends StatefulWidget {
   const RSSStoryPresenter(
-      {required this.url, required this.onLoading, Key? key})
+      {required this.url,
+      required this.onLoading,
+      this.onNavigateInWebView,
+      Key? key})
       : super(key: key);
 
   final String url;
   final Widget onLoading;
+  final void Function(String)? onNavigateInWebView;
 
   @override
   _RSSStoryPresenterState createState() => _RSSStoryPresenterState();
@@ -48,6 +52,10 @@ class _RSSStoryPresenterState extends State<RSSStoryPresenter> {
         fit: StackFit.expand,
         children: [
           WebView(
+            navigationDelegate: (request) async {
+              widget.onNavigateInWebView?.call(request.url);
+              return NavigationDecision.navigate;
+            },
             initialUrl: widget.url,
             javascriptMode: JavascriptMode.unrestricted,
             onPageFinished: (_) {
@@ -64,7 +72,9 @@ class Curtain extends StatefulWidget {
       {required this.disappearingAnimationDuration,
       required this.onAnimationFinished,
       required this.builder,
-      required this.child});
+      required this.child,
+      Key? key})
+      : super(key: key);
 
   final Duration disappearingAnimationDuration;
   final void Function(AnimationController) onAnimationFinished;
