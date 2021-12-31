@@ -21,8 +21,10 @@ abstract class RSSQueryOnHttp extends RSSQuery {
     try {
       doc = XmlDocument.parse(xmlString.body);
     } on XmlParserException catch (e) {
-      return Result.failure(RSSParseFailures.invalidFormat,
-          '${e.message}, Url: $url, Location: line ${e.line},column ${e.column},position ${e.position}.');
+      return Result.failure(
+        RSSParseFailures.invalidFormat,
+        '${e.message}, Url: $url, Location: line ${e.line},column ${e.column},position ${e.position}.',
+      );
     }
 
     final p = RSSParser();

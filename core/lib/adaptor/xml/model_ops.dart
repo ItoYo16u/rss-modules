@@ -12,7 +12,9 @@ extension Extractor on XmlElement {
     final elms = findElements(name);
     if (elms.isEmpty) {
       return Result.failure(
-          RSSParseFailures.elementNotFound, '$name not found');
+        RSSParseFailures.elementNotFound,
+        '$name not found',
+      );
     }
     final elm = elms.first.text;
     return Result.success(elm);
@@ -22,12 +24,16 @@ extension Extractor on XmlElement {
     final elms = findElements(name);
     if (elms.isEmpty) {
       return Result.failure(
-          RSSParseFailures.elementNotFound, '$name not found');
+        RSSParseFailures.elementNotFound,
+        '$name not found',
+      );
     }
     final elm = elms.first.text;
     if (elm.isEmpty) {
-      return Result.failure(RSSParseFailures.invalidFormat,
-          '$name must not be empty string, but empty string element found.');
+      return Result.failure(
+        RSSParseFailures.invalidFormat,
+        '$name must not be empty string, but empty string element found.',
+      );
     }
     return Result.success(
       findElements(name).first.text,
@@ -45,8 +51,10 @@ extension Extractor on XmlElement {
     final elm = elms.first.text;
     final uri = Uri.tryParse(elm);
     if (uri == null) {
-      return Result.failure(RSSParseFailures.invalidFormat,
-          'invalid format: $uri can not be parsed as Uri');
+      return Result.failure(
+        RSSParseFailures.invalidFormat,
+        'invalid format: $uri can not be parsed as Uri',
+      );
     }
     return Result.success(uri);
   }

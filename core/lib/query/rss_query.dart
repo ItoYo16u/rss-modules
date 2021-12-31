@@ -26,8 +26,10 @@ abstract class RSSQuery {
       _cache[url] = channel.value!;
       return channel;
     } else {
-      return Result.failure('CHANNEL_NOT_FOUND',
-          'Reason: ${channel.errorKey!}. Detail: ${channel.errorMessage}');
+      return Result.failure(
+        'CHANNEL_NOT_FOUND',
+        'Reason: ${channel.errorKey!}. Detail: ${channel.errorMessage}',
+      );
     }
   }
 
