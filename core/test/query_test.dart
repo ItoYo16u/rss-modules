@@ -25,7 +25,15 @@ void main() {
       });
     });
     group('get channel by url', () {
-      test('', () async {
+      test('returns channels', () async {
+        final urls = [
+          'https://jp.techcrunch.com/feed/',
+          'https://shinyaigeek.dev/rss.xml',
+          'https://jser.info/rss/'
+        ];
+        final ch = await Future.wait(urls.map(q.getChannelByUrl));
+        expect(ch.length, 3);
+        expect(ch.every((element) => element.isSuccess), true);
         final res = await q.getChannelByUrl('https://jp.techcrunch.com/feed/');
         expect(res.value != null, true);
         expect(res.value!.title, 'TechCrunch Japan');

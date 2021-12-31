@@ -2,10 +2,12 @@ import 'package:flechette/flechette.dart';
 import 'package:http/http.dart' as http;
 import 'package:metadata_fetch/metadata_fetch.dart';
 import 'package:rss_core/adaptor/xml/rss_parser.dart';
+import 'package:rss_core/model/exceptions.dart';
 import 'package:rss_core/model/rss_channel.dart';
 import 'package:rss_core/model/rss_item.dart';
 import 'package:rss_core/query/rss_query.dart';
 import 'package:xml/xml.dart';
+
 /// partial implementation that depends on http
 abstract class RSSQueryOnHttp extends RSSQuery {
   RSSQueryOnHttp(this.client);
@@ -15,7 +17,14 @@ abstract class RSSQueryOnHttp extends RSSQuery {
   @override
   Future<Result<RSSChannel>> onCacheMissing(String url) async {
     final xmlString = await client.get(Uri.parse(url));
-    final doc = XmlDocument.parse(xmlString.body);
+    late final XmlDocument doc;
+    try {
+      doc = XmlDocument.parse(xmlString.body);
+    } on XmlParserException catch (e) {
+      return Result.failure(RSSParseFailures.invalidFormat,
+          '${e.message}, Url: $url, Location: line ${e.line},column ${e.column},position ${e.position}.');
+    }
+
     final p = RSSParser();
     final channel = p.extractChannel(doc, url);
     return channel;
