@@ -20,7 +20,7 @@ dependencies:
       url: https://github.com/i10416/dart-modules.git
       path: flechette
   cached_network_image: ^3.0.0
-  webview_flutter: ^2.0.10
+  webview_flutter: ^3.0.0
 
 
 
