@@ -1,8 +1,10 @@
 import 'package:rss_core/model/rss_channel.dart';
 
 /// article summary belonging to rss channel
+// note: rss item is not always article.
+// e.g. podcasts and movies can be published via RSS
 class RSSItem {
-  RSSItem({
+  const RSSItem({
     required this.id,
     required this.feedUrl,
     required this.feedTitle,
