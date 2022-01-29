@@ -37,9 +37,9 @@ void main() {
         final res = await q.getChannelByUrl('https://jp.techcrunch.com/feed/');
         expect(res.value != null, true);
         expect(res.value!.title, 'TechCrunch Japan');
-        expect(res.value!.thumbnail is Thumbnail, true);
+        expect(res.value!.favicon is Favicon, true);
         expect(
-          res.value!.thumbnail!.src,
+          res.value!.favicon!.src,
           Uri.parse(
             'https://jp.techcrunch.com/wp-content/uploads/2021/05/cropped-logo_tc-1.png?w=32',
           ),

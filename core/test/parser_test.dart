@@ -17,7 +17,7 @@ void main() {
         final res = p.extractChannel(d, '');
         final channel = res.value;
         expect(channel is RSSChannel, true);
-        expect(channel!.thumbnail == null, true);
+        expect(channel!.favicon == null, true);
         final items = p.extractItems(d, channel);
         expect(items.length, 3);
         expect(items.first.title, 'article0');
@@ -33,8 +33,8 @@ void main() {
       final res = p.extractChannel(d, '');
       final channel = res.value;
       expect(channel is RSSChannel, true);
-      expect(channel!.thumbnail == null, false);
-      expect(channel.thumbnail!.src, Uri.parse('http://example.com/image.jpg'));
+      expect(channel!.favicon == null, false);
+      expect(channel.favicon!.src, Uri.parse('http://example.com/image.jpg'));
       final items = p.extractItems(d, channel);
       expect(items.length, 4);
       expect(items.first.title, 'article0');
@@ -49,8 +49,8 @@ void main() {
       final res = p.extractChannel(d, 'http://example.com');
       final channel = res.value;
       expect(channel is RSSChannel, true);
-      expect(channel!.thumbnail != null, true);
-      expect(channel.thumbnail?.src != null, true);
+      expect(channel!.favicon != null, true);
+      expect(channel.favicon?.src != null, true);
       final items = p.extractItems(d, channel);
       expect(items.length, 3);
       expect(items.first.title, 'article0');

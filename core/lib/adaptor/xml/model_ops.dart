@@ -134,24 +134,6 @@ extension FaviconExtractor on XmlElement {
   }
 }
 
-extension Optional<T> on T? {
-  R? map<R>(R Function(T) f) {
-    if (this == null) {
-      return null;
-    } else {
-      return f(this!);
-    }
-  }
-
-  R mapOr<R>(R Function(T) f, {required R or}) {
-    if (this == null) {
-      return or;
-    } else {
-      return f(this!);
-    }
-  }
-}
-
 extension ChannelExtractor on XmlElement {
   Result<RSSChannel> extractChannel(RSSType rssType, String rssUrl) {
     final title = extractStringBy('title');
