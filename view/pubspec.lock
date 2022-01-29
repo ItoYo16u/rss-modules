@@ -104,7 +104,7 @@ packages:
     description:
       path: flechette
       ref: HEAD
-      resolved-ref: "01d3f22001db24a97dafb11c2252e9ad6ee8914c"
+      resolved-ref: "543da54aff4a7f56d97d49bd1a6d5f1b7f24f4d1"
       url: "https://github.com/i10416/dart-modules.git"
     source: git
     version: "0.0.1+20220128"
@@ -298,7 +298,7 @@ packages:
     description:
       path: core
       ref: HEAD
-      resolved-ref: f3d626539c860a609639fb1879c1817057c0a392
+      resolved-ref: d4d57d0cdb2a72b349e60200edc82d8a751ad7df
       url: "https://github.com/i10416/rss-modules.git"
     source: git
     version: "0.0.1+20220129"
