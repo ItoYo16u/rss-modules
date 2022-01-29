@@ -104,10 +104,10 @@ packages:
     description:
       path: flechette
       ref: HEAD
-      resolved-ref: "0c2e6e22c1f502a4ce2cc57adaabc88941d52455"
+      resolved-ref: "01d3f22001db24a97dafb11c2252e9ad6ee8914c"
       url: "https://github.com/i10416/dart-modules.git"
     source: git
-    version: "0.0.1+20210913"
+    version: "0.0.1+20220128"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -298,10 +298,10 @@ packages:
     description:
       path: core
       ref: HEAD
-      resolved-ref: deaee5d108bbf0f3364eba2e2625b7197b1a99aa
+      resolved-ref: f3d626539c860a609639fb1879c1817057c0a392
       url: "https://github.com/i10416/rss-modules.git"
     source: git
-    version: "0.0.1+20220113"
+    version: "0.0.1+20220129"
   rxdart:
     dependency: transitive
     description:
@@ -439,7 +439,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.8"
   xdg_directories:
     dependency: transitive
     description:

@@ -25,12 +25,12 @@ class FeedThumbnail extends StatelessWidget {
   Widget build(BuildContext context) => RSSChannelPresenter(
         rssQuery: rssQuery,
         url: url,
-        builder: (ctx, channel) => channel.thumbnail == null
+        builder: (ctx, channel) => channel.favicon == null
             ? onThumbnailMissing
             : CachedNetworkImage(
                 width: width,
                 height: height,
-                imageUrl: channel.thumbnail!.src.toString(),
+                imageUrl: channel.favicon!.src.toString(),
                 placeholder: (context, url) => ColoredBox(
                   color: Theme.of(context).canvasColor,
                 ),

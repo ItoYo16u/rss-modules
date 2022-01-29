@@ -1,6 +1,6 @@
 name: rss_view
 description: rss view module.
-version: 0.0.1+20220113
+version: 0.0.1+20220129
 homepage: https://github.com/i10416/rss-modules/view
 publish_to: none
 
