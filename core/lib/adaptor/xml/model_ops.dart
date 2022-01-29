@@ -8,17 +8,8 @@ import 'package:rss_core/model/rss_item.dart';
 import 'package:xml/xml.dart';
 
 extension Extractor on XmlElement {
-  Result<String> extractStringBy(String name) {
-    final elms = findElements(name);
-    if (elms.isEmpty) {
-      return Result.failure(
-        RSSParseFailures.elementNotFound,
-        '$name not found',
-      );
-    }
-    final elm = elms.first.text;
-    return Result.success(elm);
-  }
+  Result<String> extractStringBy(String name) =>
+      attemptFirstElementBy(name).map((p0) => p0.text);
 
   Result<String> extractNonEmptyStringBy(String name) {
     final elms = findElements(name);
@@ -63,6 +54,16 @@ extension Extractor on XmlElement {
     }
   }
 
+  Result<XmlElement> attemptFirstElementBy(String name) {
+    final elms = findElements(name);
+    if (elms.isEmpty) {
+      return Result.failure(
+          RSSParseFailures.elementNotFound, 'Element $name Not Found');
+    } else {
+      return Result.success(elms.first);
+    }
+  }
+
   Result<Uri> extractUrlBy(String name) {
     final elms = findElements(name);
     if (elms.isEmpty) {
@@ -83,13 +84,13 @@ extension Extractor on XmlElement {
   }
 
   Result<DateTime> extractDatetimeBy(String name) {
-    late String pubDate;
-    final elements = findElements(name);
-    if (elements.isEmpty) {
-      return Result.failure(RSSParseFailures.elementNotFound, name);
-    } else {
-      pubDate = elements.first.text.replaceAll('+0000', 'GMT');
+    final maybePubDate = attemptFirstElementBy(name)
+        .map((p0) => p0.text.replaceAll('+0000', 'GMT'));
+    if (!maybePubDate.isSuccess) {
+      return Result.failure(maybePubDate.errorKey!, maybePubDate.errorMessage!);
     }
+    final pubDate = maybePubDate.value!;
+
     try {
       // parse ISO format
       final datetime = DateTime.parse(pubDate);
@@ -181,14 +182,14 @@ extension ChannelExtractor on XmlElement {
     if (isValid) {
       return Result.success(
         RSSChannel(
-          url: rssUrl,
-          title: title.value!,
-          description: rssType == RSSType.atom
-              ? description.value ?? ''
-              : description.value!,
-          link: link.value!,
-          thumbnail: thumbnail,
-        ),
+            url: rssUrl,
+            title: title.value!,
+            description: rssType == RSSType.atom
+                ? description.value ?? ''
+                : description.value!,
+            link: link.value!,
+            thumbnail: thumbnail,
+            favicon: thumbnail.map((p0) => Favicon(src: p0.src))),
       );
     }
     return Result.failure(
