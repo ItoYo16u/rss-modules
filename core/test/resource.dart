@@ -91,6 +91,7 @@ const atom = '''
         <id>http://example.com/post0.html</id>
         <title>article0</title>
         <link rel='alternate' type='text/html' href='http://example.com/post0.html' />
+        <enclosure url="https://example.com/img.png" type="image/png"/>
         <updated>2008-06-11T15:30:59Z</updated>
         <summary>summary0</summary>
     </entry>

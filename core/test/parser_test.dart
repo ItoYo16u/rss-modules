@@ -54,6 +54,8 @@ void main() {
       final items = p.extractItems(d, channel);
       expect(items.length, 3);
       expect(items.first.title, 'article0');
+      expect(
+          items.first.thumbnail!.src, Uri.parse('https://example.com/img.png'));
     });
   });
 }

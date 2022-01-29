@@ -40,6 +40,29 @@ extension Extractor on XmlElement {
     );
   }
 
+  Result<String> extractAttrStrBy(String tagName, String attrName) {
+    final elm = findFirstElementBy(tagName);
+    if (elm == null) {
+      return Result.failure(
+          RSSParseFailures.elementNotFound, 'Element $tagName Not Found');
+    }
+    final attr = elm.getAttribute(attrName);
+    if (attr == null) {
+      return Result.failure(
+          RSSParseFailures.attrNotFound, 'Attribute $attrName Not Found');
+    }
+    return Result.success(attr);
+  }
+
+  XmlElement? findFirstElementBy(String name) {
+    final elms = findElements(name);
+    if (elms.isEmpty) {
+      return null;
+    } else {
+      return elms.first;
+    }
+  }
+
   Result<Uri> extractUrlBy(String name) {
     final elms = findElements(name);
     if (elms.isEmpty) {
@@ -89,7 +112,7 @@ extension Extractor on XmlElement {
       );
 }
 
-extension ThumbnailExtractor on XmlElement {
+extension FaviconExtractor on XmlElement {
   Result<Thumbnail> extractThumbnail(RSSType rssType) {
     final title = extractStringBy('title');
     final src = extractUrlBy('url');
@@ -179,12 +202,42 @@ extension ChannelExtractor on XmlElement {
   }
 }
 
+extension ItemThumbnailExtractor on XmlElement {
+  Thumbnail? extractItemThumbnail(RSSType rssType) {
+    late Thumbnail? thumbnail;
+    if (rssType == RSSType.atom) {
+      const tagName = 'enclosure';
+      final tpe = extractAttrStrBy(tagName, 'type');
+      if (tpe.isSuccess &&
+          {'image/png', 'image/jpg', 'image/jpeg'}.contains(tpe.value!)) {
+        final imgUrl = extractAttrStrBy(tagName, 'url');
+        if (imgUrl.isSuccess) {
+          final maybeUri = Uri.tryParse(imgUrl.value!);
+          if (maybeUri == null) {
+            thumbnail = null;
+          } else {
+            thumbnail = Thumbnail(src: maybeUri);
+          }
+        } else {
+          thumbnail = null;
+        }
+      } else {
+        thumbnail = null;
+      }
+    } else {
+      thumbnail = null;
+    }
+    return thumbnail;
+  }
+}
+
 extension ItemExtractor on XmlElement {
   Result<RSSItem> extractItem(RSSChannel channel, RSSType rssType) {
     final title = extractStringBy('title');
     final description = extractStringBy(descriptionMapping[rssType]!);
     final categories = extractListBy('category');
     final url = extractStringBy('link');
+    final thumbnail = extractItemThumbnail(rssType);
     final pubDate = extractDatetimeBy(pubDateMapping[rssType]!);
     if (title.isSuccess &&
         description.isSuccess &&
@@ -197,6 +250,8 @@ extension ItemExtractor on XmlElement {
           feedUrl: channel.link,
           rssUrl: channel.url,
           feedThumbnail: channel.thumbnail,
+          feedFavicon: channel.favicon,
+          thumbnail: thumbnail,
           title: title.value!,
           description: description.value!,
           url: url.value!,

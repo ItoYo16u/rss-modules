@@ -4,20 +4,21 @@ import 'package:rss_core/model/rss_channel.dart';
 // note: rss item is not always article.
 // e.g. podcasts and movies can be published via RSS
 class RSSItem {
-  const RSSItem({
-    required this.id,
-    required this.feedUrl,
-    required this.feedTitle,
-    required this.title,
-    required this.description,
-    required this.url,
-    required this.rssUrl,
-    required this.displayTime,
-    this.categories = const [],
-    this.author,
-    this.keywords = const [],
-    this.feedThumbnail,
-  });
+  const RSSItem(
+      {required this.id,
+      required this.feedUrl,
+      required this.feedTitle,
+      required this.title,
+      required this.description,
+      required this.url,
+      required this.rssUrl,
+      required this.displayTime,
+      this.categories = const [],
+      this.author,
+      this.keywords = const [],
+      this.feedThumbnail,
+      this.feedFavicon,
+      this.thumbnail});
 
   final String id;
 
@@ -29,6 +30,12 @@ class RSSItem {
 
   /// thumbnail url of feed this item belongs to
   final Thumbnail? feedThumbnail;
+
+  /// favicon url of the feed this item belongs to
+  final Favicon? feedFavicon;
+
+  /// thumbnail for this item; e.g. enclosure of type PNG
+  final Thumbnail? thumbnail;
 
   /// rss xml url this item belongs to
   final String rssUrl;

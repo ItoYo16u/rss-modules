@@ -22,3 +22,9 @@ const imageMapping = <RSSType, String?>{
   RSSType.v2_0: 'image',
   RSSType.atom: 'icon'
 };
+
+const thumbnailMapping = <RSSType, String?>{
+  RSSType.v1_0: null,
+  RSSType.v2_0: null,
+  RSSType.atom: 'enclosure'
+};
