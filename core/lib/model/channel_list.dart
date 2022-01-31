@@ -1,10 +1,7 @@
 class ChannelList {
   ChannelList(
-      {required this.id,
-      required this.label,
-      required Iterable<String> channelURLs})
-      : _underlying = channelURLs;
-  final Iterable<String> _underlying;
-  final String id;
+      {required this.id, required this.label, required this.channelURLs});
+  final Iterable<String> channelURLs;
+  final int id;
   final String label;
 }
