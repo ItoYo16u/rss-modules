@@ -1,0 +1,27 @@
+name: rss_storage
+description: storage layer for rss modules
+version: 0.0.1
+homepage: https://github.com/i10416/rss-modules/tree/master/rss_storage
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0-134.1.beta <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.0.2
+  path: ^1.8.0
+  flechette: ^0.0.1
+  rss_core:
+    git:
+      url: https://github.com/i10416/rss-modules.git
+      path: core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  sqflite_common_ffi: ^2.1.0
+
+flutter:
