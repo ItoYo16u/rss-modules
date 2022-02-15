@@ -102,12 +102,10 @@ packages:
   flechette:
     dependency: "direct main"
     description:
-      path: flechette
-      ref: HEAD
-      resolved-ref: "543da54aff4a7f56d97d49bd1a6d5f1b7f24f4d1"
-      url: "https://github.com/i10416/dart-modules.git"
-    source: git
-    version: "0.0.1+20220128"
+      name: flechette
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -119,7 +117,7 @@ packages:
       name: flutter_blurhash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0"
+    version: "0.6.4"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -215,7 +213,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.8"
+    version: "2.0.9"
   path_provider_android:
     dependency: transitive
     description:
@@ -298,7 +296,7 @@ packages:
     description:
       path: core
       ref: HEAD
-      resolved-ref: d4d57d0cdb2a72b349e60200edc82d8a751ad7df
+      resolved-ref: bde0aea339d59a146f74384fd823c976dad704f1
       url: "https://github.com/i10416/rss-modules.git"
     source: git
     version: "0.0.1+20220129"
@@ -439,14 +437,14 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.8"
+    version: "2.4.0"
   xdg_directories:
     dependency: transitive
     description:
       name: xdg_directories
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.0+1"
   xml:
     dependency: transitive
     description:

@@ -109,12 +109,10 @@ packages:
   flechette:
     dependency: transitive
     description:
-      path: flechette
-      ref: HEAD
-      resolved-ref: "0c2e6e22c1f502a4ce2cc57adaabc88941d52455"
-      url: "https://github.com/i10416/dart-modules.git"
-    source: git
-    version: "0.0.1+20210913"
+      name: flechette
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -305,10 +303,10 @@ packages:
     description:
       path: core
       ref: HEAD
-      resolved-ref: "08720bab612ea3bad7f79a0528c96ffceabd8957"
+      resolved-ref: bde0aea339d59a146f74384fd823c976dad704f1
       url: "https://github.com/i10416/rss-modules.git"
     source: git
-    version: "0.0.1+20220113"
+    version: "0.0.1+20220129"
   rss_view:
     dependency: "direct main"
     description:

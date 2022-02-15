@@ -15,10 +15,7 @@ dependencies:
     git:
       url: https://github.com/i10416/rss-modules.git
       path: core
-  flechette:
-    git:
-      url: https://github.com/i10416/dart-modules.git
-      path: flechette
+  flechette: ^0.0.1
   cached_network_image: ^3.0.0
   webview_flutter: ^3.0.0
 
