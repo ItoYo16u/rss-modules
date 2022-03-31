@@ -5,3 +5,6 @@
 .pub/
 
 build/
+
+.flutter-plugins-dependencies
+.flutter-plugins
