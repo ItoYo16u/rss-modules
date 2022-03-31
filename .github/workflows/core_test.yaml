@@ -1,0 +1,30 @@
+name: core_test
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'core/**'
+  push:
+    branches: [ master, main ]
+    paths:
+      - 'core/**'
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    container:
+      image:  google/dart:latest
+    steps:
+      - name: set up repository
+        uses: actions/checkout@v3
+      - name: install deps
+        run: pub get
+        working-directory: ./core
+      - name: analyzer
+        run: dartanalyzer --fatal-warnings --fatal-infos .
+        working-directory: ./core
+      - name: test
+        run: pub run test ./
+        working-directory: ./core
+
