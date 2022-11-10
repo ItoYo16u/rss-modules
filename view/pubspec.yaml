@@ -1,6 +1,6 @@
 name: rss_view
 description: rss view module.
-version: 0.0.1+20220129
+version: 0.1.0
 homepage: https://github.com/i10416/rss-modules/view
 publish_to: none
 
@@ -15,7 +15,7 @@ dependencies:
     git:
       url: https://github.com/i10416/rss-modules.git
       path: core
-  flechette: ^0.0.1
+  flechette: ^0.1.0
   cached_network_image: ^3.0.0
   webview_flutter: ^3.0.0
 
