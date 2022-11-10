@@ -1,13 +1,13 @@
 name: rss_core
 description: RSS core module.
-version: 0.0.1+20220129
+version: 0.1.0
 homepage: https://github.com/i10416/rss-modules/core
 publish_to: none
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  flechette: ^0.0.1
+  flechette: ^0.1.0
   http: ^0.13.3
   meta: ^1.7.0
   metadata_fetch: ^0.4.1
