@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   sqflite: ^2.0.2
   path: ^1.8.0
-  flechette: ^0.0.1
+  flechette: ^0.1.0
   rss_core:
     git:
       url: https://github.com/i10416/rss-modules.git
