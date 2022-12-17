@@ -17,7 +17,7 @@ dependencies:
       path: core
   flechette: ^0.1.0
   cached_network_image: ^3.0.0
-  webview_flutter: ^3.0.0
+  webview_flutter: ^4.0.0
 
 
 
